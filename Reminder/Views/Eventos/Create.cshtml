@@ -1,0 +1,87 @@
+﻿@model Reminder.Models.Evento
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Criar</h1>
+
+<h4>Evento</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Titulo" class="control-label"></label>
+                <input asp-for="Titulo" name="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Descricao" class="control-label"></label>
+                <input asp-for="Descricao" name="Descricao" class="form-control" />
+                <span asp-validation-for="Descricao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Criacao" class="control-label"></label>
+                <input asp-for="Criacao" name="Criacao" class="form-control" />
+                <span asp-validation-for="Criacao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Horario" class="control-label"></label>
+                <input asp-for="Horario" name="Horario" class="form-control" />
+                <span asp-validation-for="Horario" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Exclusivo" class="control-label"></label>
+                <input asp-for="Exclusivo" id="exclusivo" runat="server" type="checkbox" name="Exclusivo" class="form-checkbox" onchange="TornaEventoExclusivo(this.checked)" />
+                <span asp-validation-for="Exclusivo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label id="adcUsuario">Adicionar Usuarios</label>
+                <select name="usuario_selecionado" id="adicionarUsuario" type="checkbox" class="form-select" onchange="">
+                    <option value="0"></option>
+                    @foreach (var u in ViewBag.Usuarios)
+                    {
+                        <option value="@u.Id">@u.Nome</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Agendar" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar para a lista</a>
+</div>
+
+@*<script>
+    function adicionarUsuario(selectElement) {
+        let selectedOption = selectElement.options[selectElement.selectedIndex];
+        let listaUsuariosSelecionados = document.getElementById("listaUsuariosSelecionados");
+    @ViewBag.UsuariosSelecionados.Add()
+        }
+</script>*@
+
+<script>
+    function TornaEventoExclusivo(exclusivo) {
+        if (exclusivo == 1) {
+            document.getElementById('adicionarUsuario').style.display = 'none';
+            document.getElementById('adcUsuario').style.display = 'none';
+        } else
+            document.getElementById('adicionarUsuario').style.display = 'block';
+            document.getElementById('adcUsuario').style.display = 'none';
+
+    }
+</script>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

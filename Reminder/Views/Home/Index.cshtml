@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Reminder</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Reminder.styles.css" asp-append-version="true" />
+</head>
+
+<div class="text-center">
+    <h1 class="display-4">Reminder</h1>
+    <p><b>Seu software de agenda online</b></p>
+</div>
+<div>
+    <h3><label>Olá, Hoje é dia @DateTime.Now.ToString("dd/MM/yyyy")</label></h3>
+
+    <form asp-action="Hoje">
+        <div class="row">
+            <div class="col">
+                <label>Nome do Usuário</label>
+                <input type="text" class="form-control" name="nomeUsuario" placeholder="Nome Usuario" aria-label="Nome">
+            </div>
+            <div class="col">
+                <label>Nome do Evento</label>
+                <input type="text" class="form-control" name="nomeEvento" placeholder="Titulo Evento" aria-label="Titulo Evento">
+            </div>
+            <div class="col">
+                <label>Data do Evento</label>
+                <input type="date" class="form-control" name="dataEvento" placeholder="Data Evento" aria-label="Data Evento">
+            </div>
+            <div>
+                <input type="submit" name="buscarUsuario" class="btn btn-primary" />
+            </div>
+        </div>
+    </form>
+    @if(ViewBag.Eventos != null) {
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Usuario</th>
+                <th scope="col">Evento</th>
+                <th scope="col">Data/Hora</th>
+                <th scope="col">Exclusivo</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var ev in ViewBag.Eventos)
+            {
+                <tr>
+                    <td>
+                        @ev.nomeUsuario
+                    </td>
+                    <td>
+                        @ev.nomeEvento
+                    </td>
+                    <td>
+                        @ev.dataEvento
+                    </td>
+                    <td>
+                        @if (ev.exclusivo == true)
+                        {
+                                <input type="checkbox" checked disabled="" />
+                        } else
+                        {
+                            <input type="checkbox" disabled="" />
+                        }
+                          
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+    </table>
+    }
+
+
+</div>
